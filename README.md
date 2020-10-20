@@ -11,7 +11,7 @@ What you'll need:
 ## How to run the project
 1. Setup docker's virtual mysql server with this command: `docker run -d --rm --name mysql-test-db -e MYSQL_ROOT_PASSWORD=password -p 3307:3306 mysql`
 2. Connect to the docker database through your client with the username and password we setup earlier: `uname: root`, `pw: password`
-``MYSQL
+```SQL
 CREATE SCHEMA IF NOT EXISTS BookingSystem;
 
 create table Customers (
@@ -45,5 +45,6 @@ create table Employees (
 		references Employees(ID)
 		on delete cascade	
 );
+```
 
 2. Clone the project and run it up in your favorite IDE
