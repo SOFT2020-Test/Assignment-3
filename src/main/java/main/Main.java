@@ -1,22 +1,19 @@
 package main;
 
-import com.github.javafaker.Faker;
-import com.google.protobuf.Message;
 import datalayer.booking.BookingStorageImpl;
-import datalayer.employee.EmployeeStorageImpl;
-import dto.*;
-import dto.Booking;
 import datalayer.customer.CustomerStorageImpl;
-import servicelayer.booking.BookingService;
+import datalayer.employee.EmployeeStorageImpl;
+import dto.Booking;
+import dto.Customer;
+import dto.Employee;
+import dto.SmsMessage;
 import servicelayer.booking.BookingServiceException;
 import servicelayer.booking.BookingServiceImpl;
 import servicelayer.customer.CustomerServiceException;
 import servicelayer.customer.CustomerServiceImpl;
-import servicelayer.notifications.SmsService;
 import servicelayer.notifications.SmsServiceException;
 import servicelayer.notifications.SmsServiceImpl;
 
-import java.sql.Date;
 import java.sql.SQLException;
 
 public class Main {
@@ -32,7 +29,6 @@ public class Main {
         SmsServiceImpl smsService = new SmsServiceImpl();
         CustomerServiceImpl customerService = new CustomerServiceImpl(storage);
         BookingServiceImpl bookingService = new BookingServiceImpl(bStorage);
-
 
         /*
         for (int i = 0; i < 100; i++) {
@@ -72,10 +68,4 @@ public class Main {
         System.out.println("The end.");*/
 
     }
-
-    public static String toString(Customer c) {
-        return "{" + c.getId() + ", " + c.getFirstname() + ", " + c.getLastname() + "}";
-    }
-
-
 }

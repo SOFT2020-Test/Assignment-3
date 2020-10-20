@@ -2,6 +2,7 @@ package datalayer.booking;
 
 import dto.Booking;
 import dto.BookingCreation;
+import dto.Customer;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -85,5 +86,27 @@ public class BookingStorageImpl implements BookingStorage {
             return results;
         }
 
+    }
+
+    @Override
+    public Booking getBookingById(int bookingId) throws SQLException{
+        var sql = "select * from Bookings where id = ?";
+        try (var con = getConnection();
+             var stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, bookingId);
+
+            try (var resultSet = stmt.executeQuery()) {
+                if (resultSet.next()){
+                    var id = resultSet.getInt("ID");
+                    var customerId = resultSet.getInt("customerId");
+                    var employeeId = resultSet.getInt("employeeId");
+                    var date = resultSet.getString("date");
+                    var start = resultSet.getString("start");
+                    var end = resultSet.getString("end");
+                    return new Booking(id, customerId, employeeId, date, start, end);
+                }
+                return null;
+            }
+        }
     }
 }

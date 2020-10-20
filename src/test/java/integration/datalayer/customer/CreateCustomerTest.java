@@ -66,7 +66,7 @@ class CreateCustomerTest {
     }
 
     @Test
-    public void ustReturnLatestId() throws SQLException {
+    public void mustReturnLatestId() throws SQLException {
         // Arrange
         // Act
         var id1 = customerStorage.createCustomer(new CustomerCreation("a", "b"));

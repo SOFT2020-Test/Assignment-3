@@ -56,4 +56,13 @@ public class BookingServiceImpl implements BookingService{
             throw new BookingServiceException(throwables.getMessage());
         }
     }
+
+    @Override
+    public Booking getBookingById(int id) throws BookingServiceException {
+        try {
+            return bookingStorage.getBookingById(id);
+        } catch(SQLException throwables) {
+            throw new BookingServiceException(throwables.getMessage());
+        }
+    }
 }
