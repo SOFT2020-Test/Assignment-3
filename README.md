@@ -48,4 +48,4 @@ create table Employees (
 );
 ```
 
-Finally, Clone the project and run it up in your favorite IDE. If setup correct you should see it running with all the tests passing.
+Finally, clone the project and run it up in your favorite IDE. If setup correct you should see it running with all the tests passing.
