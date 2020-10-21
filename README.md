@@ -1,5 +1,5 @@
 # Assignment-3   
-###   by Andreas, Jonatan, Jonas & Thomas  
+###   by Jonatan, Jonas & Thomas  
 [Assignment Link](Assignment-3-Description.pdf)  
 
 ## Setup
