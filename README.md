@@ -48,4 +48,4 @@ create table Employees (
 );
 ```
 
-Finally, clone the project and run it up in your favorite IDE. If setup correct you should see it running with all the tests passing.
+Finally, clone the project and run it up in your favorite IDE. If setup correct you should see it running with all the tests passing (NOTE: You may have to run the test twice before everyone passes. It is because docker doesn't finish setting up the database before running some of the tests).
