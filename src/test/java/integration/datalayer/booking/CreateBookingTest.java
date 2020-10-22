@@ -7,6 +7,7 @@ import datalayer.customer.CustomerStorage;
 import datalayer.customer.CustomerStorageImpl;
 import dto.BookingCreation;
 import dto.CustomerCreation;
+import main.SQLConverter;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,7 +35,7 @@ class CreateBookingTest {
                 .defaultSchema(db)
                 .createSchemas(true)
                 .schemas(db)
-                .target("3")
+                .target("4")
                 .dataSource(url, "root", "password"));
 
         flyway.migrate();
@@ -47,7 +48,7 @@ class CreateBookingTest {
     public void mustSaveCustomerInDatabaseWhenCallingCreateCustomer() throws SQLException {
         // Arrange
         // Act
-        bookingStorage.createBooking(new BookingCreation(1, 1, "2020-10-10", "15:00", "21:00"));
+        bookingStorage.createBooking(new BookingCreation(1, 1, SQLConverter.ConvertToSQLDate(new Date()), "15:00", "21:00"));
 
         // Assert
         var customers = bookingStorage.getBookingsForCustomer(1);
@@ -61,10 +62,8 @@ class CreateBookingTest {
     public void mustReturnLatestId() throws SQLException {
         // Arrange
         // Act
-        var id1 =  bookingStorage.createBooking(new BookingCreation(1, 1, "2020-10-10", "15:00", "21:00"));
-
-        var id2 =  bookingStorage.createBooking(new BookingCreation(1, 1, "2020-10-10", "15:00", "21:00"));
-
+        var id1 =  bookingStorage.createBooking(new BookingCreation(1, 1, new Date(), "15:00", "21:00"));
+        var id2 =  bookingStorage.createBooking(new BookingCreation(1, 1, new Date(), "15:00", "21:00"));
 
         // Assert
         assertEquals(1, id2 - id1);

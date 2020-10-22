@@ -1,5 +1,7 @@
 package dto;
 
+import java.util.Date;
+
 public class CustomerCreation {
 
     public String getFirstname() {
@@ -12,10 +14,21 @@ public class CustomerCreation {
         return lastname;
     }
 
-    public final String firstname, lastname;
+    public Date getBirthday() {
+        return birthday;
+    }
 
-    public CustomerCreation(String firstname, String lastname) {
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public final String firstname, lastname, phoneNumber;
+    public final Date birthday;
+
+    public CustomerCreation(String firstname, String lastname, String phoneNumber, Date birthday) {
         this.firstname = firstname;
         this.lastname = lastname;
+        this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
     }
 }

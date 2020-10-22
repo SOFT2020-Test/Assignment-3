@@ -6,4 +6,3 @@ create table Customers (
 	PRIMARY KEY (ID)
 )
 
-

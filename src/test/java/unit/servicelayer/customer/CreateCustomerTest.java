@@ -1,5 +1,6 @@
 package unit.servicelayer.customer;
 
+import com.github.javafaker.Faker;
 import datalayer.customer.CustomerStorage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -24,11 +25,14 @@ public class CreateCustomerTest {
     // DOC (Depended-on Component)
     private CustomerStorage storageMock;
 
+    private Faker faker;
+
 
     @BeforeAll
     public void beforeAll(){
         storageMock = mock(CustomerStorage.class);
         customerService = new CustomerServiceImpl(storageMock);
+        faker = new Faker();
     }
 
     @Test
@@ -37,8 +41,9 @@ public class CreateCustomerTest {
         // Act
         var firstName = "a";
         var lastName = "b";
-        var birthdate = new Date(123456789l);
-        customerService.createCustomer(firstName, lastName, birthdate);
+        var phonenumber = "12345678";
+        var birthdate = faker.date().birthday();
+        customerService.createCustomer(firstName, lastName, birthdate, phonenumber);
 
         // Assert
         // Can be read like: verify that storageMock was called 1 time on the method

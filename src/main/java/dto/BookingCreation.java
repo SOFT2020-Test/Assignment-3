@@ -1,17 +1,16 @@
 package dto;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.util.Date;
 
 public class BookingCreation {
 
-    private final String date;
+    private final Date date;
     private final String start;
     private final String end;
     private final int customerId, employeeId;
 
 
-    public BookingCreation(int customerId, int employeeId, String date, String start, String end) {
+    public BookingCreation(int customerId, int employeeId, Date date, String start, String end) {
         this.customerId = customerId;
         this.employeeId = employeeId;
         this.date = date;
@@ -20,7 +19,7 @@ public class BookingCreation {
 
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 

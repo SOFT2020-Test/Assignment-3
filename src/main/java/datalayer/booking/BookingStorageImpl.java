@@ -3,6 +3,7 @@ package datalayer.booking;
 import dto.Booking;
 import dto.BookingCreation;
 import dto.Customer;
+import main.SQLConverter;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class BookingStorageImpl implements BookingStorage {
              var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, bookingToCreate.getCustomerId());
             stmt.setInt(2, bookingToCreate.getEmployeeId());
-            stmt.setString(3, bookingToCreate.getDate());
+            stmt.setDate(3, SQLConverter.ConvertToSQLDate(bookingToCreate.getDate()));
             stmt.setString(4, bookingToCreate.getStart());
             stmt.setString(5, bookingToCreate.getEnd());
             stmt.executeUpdate();

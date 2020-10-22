@@ -1,5 +1,6 @@
 package unit.servicelayer.booking;
 
+import com.github.javafaker.Faker;
 import datalayer.booking.BookingStorage;
 import datalayer.customer.CustomerStorage;
 import dto.BookingCreation;
@@ -27,31 +28,35 @@ public class CreateBookingTest {
 
     // SUT (System Under Test)
     private BookingService bookingService;
+    private CustomerService customerService;
 
     // DOC (Depended-on Component)
     private BookingStorage storageMock;
+
+    private Faker faker;
 
 
     @BeforeAll
     public void beforeAll(){
         storageMock = mock(BookingStorage.class);
         bookingService = new BookingServiceImpl(storageMock);
+        faker = new Faker();
     }
 
     @Test
-    public void mustCallStorageWhenCreatingBooking() throws BookingServiceException, SQLException, SmsServiceException {
+    public void mustCallStorageWhenCreatingBooking() throws BookingServiceException, SQLException {
         // Arrange
         // Act
 
-        int customerId = 1;
+        int customerId = 5;
         int employeeId = 1;
-        Date date = new Date();
+        Date date = faker.date().birthday();
         String start = "20:15";
         String end = "21:15";
 
-        String recipient = "12345678";
-        String message = "This is a message";
-        bookingService.createBooking(customerId, employeeId, date.toString(), start, end, new SmsMessage(recipient, message));
+        String recipient = faker.phoneNumber().phoneNumber();
+        String message = "Thank you for your order!";
+        bookingService.createBooking(customerId, employeeId, date, start, end, new SmsMessage(recipient, message));
 
         // Assert
         // Can be read like: verify that storageMock was called 1 time on the method

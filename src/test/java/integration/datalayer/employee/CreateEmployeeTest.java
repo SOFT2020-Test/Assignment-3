@@ -30,7 +30,7 @@ class CreateEmployeeTest {
                 .defaultSchema(db)
                 .createSchemas(true)
                 .schemas(db)
-                .target("3")
+                .target("4")
                 .dataSource(url, "root", "password"));
 
         flyway.migrate();
@@ -41,6 +41,12 @@ class CreateEmployeeTest {
         if (numEmployees < 25) {
             addFakeEmployees(25 - numEmployees);
         }
+    }
+
+    @Test
+    void migrate() {
+        // migration starts automatically,
+        // since Spring Boot runs the Flyway scripts on startup
     }
 
     private void addFakeEmployees(int numCustomers) throws SQLException {

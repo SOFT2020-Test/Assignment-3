@@ -1,5 +1,6 @@
 package integration.servicelayer.customer;
 
+import com.github.javafaker.Faker;
 import datalayer.customer.CustomerStorage;
 import datalayer.customer.CustomerStorageImpl;
 import org.flywaydb.core.Flyway;
@@ -26,6 +27,7 @@ class SvcCreateCustomerTest {
 
     private CustomerService svc;
     private CustomerStorage storage;
+    private Faker faker;
 
     private static final int PORT = 3306;
     private static final String PASSWORD = "password";
@@ -52,13 +54,20 @@ class SvcCreateCustomerTest {
                         .schemas(db)
                         .defaultSchema(db)
                         .createSchemas(true)
-                        .target("3")
+                        .target("4")
                         .dataSource(url, "root", PASSWORD)
         );
         flyway.migrate();
 
         storage = new CustomerStorageImpl(url + db,"root", PASSWORD);
         svc = new CustomerServiceImpl(storage);
+        faker = new Faker();
+    }
+
+    @Test
+    void migrate() {
+        // migration starts automatically,
+        // since Spring Boot runs the Flyway scripts on startup
     }
 
     @Test
@@ -66,8 +75,9 @@ class SvcCreateCustomerTest {
         // Arrange
         var firstName = "John";
         var lastName = "Johnson";
-        var bday = new Date(1239821l);
-        int id = svc.createCustomer(firstName, lastName, bday);
+        var phonenumber = faker.phoneNumber().phoneNumber();
+        var bday = faker.date().birthday();
+        int id = svc.createCustomer(firstName, lastName, bday, phonenumber);
 
         // Act
         var createdCustomer = storage.getCustomerWithId(id);

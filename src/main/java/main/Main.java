@@ -1,12 +1,11 @@
 package main;
 
+import com.github.javafaker.DateAndTime;
+import com.github.javafaker.Faker;
 import datalayer.booking.BookingStorageImpl;
 import datalayer.customer.CustomerStorageImpl;
 import datalayer.employee.EmployeeStorageImpl;
-import dto.Booking;
-import dto.Customer;
-import dto.Employee;
-import dto.SmsMessage;
+import dto.*;
 import servicelayer.booking.BookingServiceException;
 import servicelayer.booking.BookingServiceImpl;
 import servicelayer.customer.CustomerServiceException;
@@ -15,6 +14,11 @@ import servicelayer.notifications.SmsServiceException;
 import servicelayer.notifications.SmsServiceImpl;
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Main {
 
@@ -30,42 +34,29 @@ public class Main {
         CustomerServiceImpl customerService = new CustomerServiceImpl(storage);
         BookingServiceImpl bookingService = new BookingServiceImpl(bStorage);
 
-        /*
-        for (int i = 0; i < 100; i++) {
+        var x = customerService.getCustomerById(10);
+        System.out.println(x);
+
+        /*BookingCreation t = new BookingCreation(3,3, "2020-10-10","20:15","21:15");
+        bStorage.createBooking(t);*/
+
+    }
+
+    public void CreateFakeEmployees(int amount) throws SQLException {
+        EmployeeStorageImpl eStorage = new EmployeeStorageImpl(conStr, user, pass);
+        Faker faker = new Faker();
+        for (int i = 0; i < amount; i++) {
             EmployeeCreation c = new EmployeeCreation(faker.name().firstName(), faker.name().lastName());
             eStorage.createEmployee(c);
         }
+    }
 
-        BookingCreation t = new BookingCreation(3,3, "2020-10-10","20:15","21:15");
-        bStorage.createBooking(t);
-
-
-
-        System.out.println("Got customers: ");
-        for (Customer c : storage.getCustomers()) {
-            System.out.println(toString(c));
+    public void createFakeCostumer(int amount) throws SQLException, ParseException {
+        CustomerStorageImpl cStorage = new CustomerStorageImpl(conStr, user, pass);
+        Faker faker = new Faker();
+        for (int i = 0; i < amount; i++) {
+             CustomerCreation c = new CustomerCreation(faker.name().firstName(), faker.name().lastName(), faker.phoneNumber().toString(), faker.date().birthday());
+            cStorage.createCustomer(c);
         }
-        System.out.println("The end.");
-
-        System.out.println("Got booking from customer: ");
-        for (Booking b : bStorage.getBookingsForCustomer(3)) {
-            System.out.println(b);
-        }
-        System.out.println("The end.");
-
-        System.out.println("Get Employee from id: ");
-        for (Employee e: eStorage.getEmployeeWithId(2)) {
-            System.out.println((e.getId()));
-            System.out.println((e.getFirstname()));
-            System.out.println((e.getLastname()));
-        }
-        System.out.println("The end.");
-
-        System.out.println("Got booking from employee: ");
-        for (Booking e : bStorage.getBookingsForEmployee(3)) {
-            System.out.println(e);
-        }
-        System.out.println("The end.");*/
-
     }
 }

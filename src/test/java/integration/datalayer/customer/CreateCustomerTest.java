@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 import java.sql.SQLException;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("integration")
 class CreateCustomerTest {
     private CustomerStorage customerStorage;
+    private Faker faker;
 
     @BeforeAll
     public void Setup() throws SQLException {
@@ -29,23 +31,23 @@ class CreateCustomerTest {
                 .defaultSchema(db)
                 .createSchemas(true)
                 .schemas(db)
-                .target("3")
+                .target("4")
                 .dataSource(url, "root", "password"));
 
         flyway.migrate();
 
         customerStorage = new CustomerStorageImpl(url+db, "root", "password");
+        faker = new Faker();
 
         var numCustomers = customerStorage.getCustomers().size();
-        if (numCustomers < 25) {
-            addFakeCustomers(25 - numCustomers);
+        if (numCustomers < 5) {
+            addFakeCustomers(5 - numCustomers);
         }
     }
 
     private void addFakeCustomers(int numCustomers) throws SQLException {
-        Faker faker = new Faker();
         for (int i = 0; i < numCustomers; i++) {
-            CustomerCreation c = new CustomerCreation(faker.name().firstName(), faker.name().lastName());
+            CustomerCreation c = new CustomerCreation(faker.name().firstName(), faker.name().lastName(), faker.phoneNumber().phoneNumber(), faker.date().birthday());
             customerStorage.createCustomer(c);
         }
 
@@ -55,7 +57,7 @@ class CreateCustomerTest {
     public void mustSaveCustomerInDatabaseWhenCallingCreateCustomer() throws SQLException {
         // Arrange
         // Act
-        customerStorage.createCustomer(new CustomerCreation("John","Carlssonn"));
+        customerStorage.createCustomer(new CustomerCreation("John","Carlssonn", faker.phoneNumber().phoneNumber(), faker.date().birthday()));
 
         // Assert
         var customers = customerStorage.getCustomers();
@@ -69,8 +71,8 @@ class CreateCustomerTest {
     public void mustReturnLatestId() throws SQLException {
         // Arrange
         // Act
-        var id1 = customerStorage.createCustomer(new CustomerCreation("a", "b"));
-        var id2 = customerStorage.createCustomer(new CustomerCreation("c", "d"));
+        var id1 = customerStorage.createCustomer(new CustomerCreation("a", "b", faker.phoneNumber().phoneNumber(), faker.date().birthday()));
+        var id2 = customerStorage.createCustomer(new CustomerCreation("c", "d", faker.phoneNumber().phoneNumber(), faker.date().birthday()));
 
         // Assert
         assertEquals(1, id2 - id1);

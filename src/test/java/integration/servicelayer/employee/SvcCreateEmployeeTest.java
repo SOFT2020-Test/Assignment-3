@@ -1,6 +1,7 @@
 package integration.servicelayer.employee;
 
 
+import com.github.javafaker.Faker;
 import datalayer.employee.EmployeeStorage;
 import datalayer.employee.EmployeeStorageImpl;
 import dto.Employee;
@@ -28,6 +29,7 @@ class SvcCreateEmployeeTest {
 
     private EmployeeService svc;
     private EmployeeStorage storage;
+    private Faker faker;
 
     private static final int PORT = 3306;
     private static final String PASSWORD = "password";
@@ -54,13 +56,14 @@ class SvcCreateEmployeeTest {
                         .schemas(db)
                         .defaultSchema(db)
                         .createSchemas(true)
-                        .target("3")
+                        .target("4")
                         .dataSource(url, "root", PASSWORD)
         );
         flyway.migrate();
 
         storage = new EmployeeStorageImpl(url + db,"root", PASSWORD);
         svc = new EmployeeServiceImpl(storage);
+        faker = new Faker();
     }
 
     @Test
@@ -68,7 +71,7 @@ class SvcCreateEmployeeTest {
         // Arrange
         var firstName = "John";
         var lastName = "Johnson";
-        var bday = new Date(1239821l);
+        var bday = faker.date().birthday();
         int id = svc.createEmployee(firstName, lastName, bday);
 
         // Act

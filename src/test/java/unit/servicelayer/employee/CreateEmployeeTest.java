@@ -1,6 +1,7 @@
 package unit.servicelayer.employee;
 
 
+import com.github.javafaker.Faker;
 import datalayer.employee.EmployeeStorage;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Tag;
@@ -25,11 +26,14 @@ public class CreateEmployeeTest {
     // DOC (Depended-on Component)
     private EmployeeStorage storageMock;
 
+    private Faker faker;
+
 
     @BeforeAll
     public void beforeAll(){
         storageMock = mock(EmployeeStorage.class);
         employeeService = new EmployeeServiceImpl(storageMock);
+        faker = new Faker();
     }
 
     @Test
@@ -38,7 +42,7 @@ public class CreateEmployeeTest {
         // Act
         var firstName = "a";
         var lastName = "b";
-        var birthdate = new Date(123456789l);
+        var birthdate = faker.date().birthday();
         employeeService.createEmployee(firstName, lastName, birthdate);
 
         // Assert
