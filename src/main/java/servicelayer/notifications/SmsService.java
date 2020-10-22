@@ -8,5 +8,5 @@ public interface SmsService {
      * @param message
      * @return true if success, false otherwise
      */
-    boolean sendSms(SmsMessage message) throws SmsServiceException;
+    boolean sendSms(SmsMessage message);
 }

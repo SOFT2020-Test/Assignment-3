@@ -30,7 +30,7 @@ public class BookingServiceImpl implements BookingService{
 
 
     @Override
-    public int createBooking(int customerId, int employeeId, String date, String start, String end, SmsMessage message) throws BookingServiceException, SmsServiceException {
+    public int createBooking(int customerId, int employeeId, String date, String start, String end, SmsMessage message) throws BookingServiceException {
         try {
             smsService.sendSms(message);
             return bookingStorage.createBooking(new BookingCreation(customerId, employeeId, date, start, end));

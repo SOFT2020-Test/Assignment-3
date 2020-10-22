@@ -41,27 +41,36 @@ public class NotificationTest {
         var recipient = "123123";
         var message = "This is a message!";
         var sms = smsService.sendSms(new SmsMessage(recipient, message));
-
         assertEquals(sms, true); //We expect the sms to be TRUE
     }
 
     @Test
-    public void sendMessageExpectSmsServiceExceptionNoRecipient() throws SmsServiceException {
+    public void sendMessageWithEmptyRecipientExpectFalse() {
         // Arrange
         // Act
         var recipient = "";
         var message = "This is a message!";
-        Throwable exception = assertThrows(SmsServiceException.class, () -> smsService.sendSms(new SmsMessage(recipient, message)));
-        assertEquals("SMS ERROR: message must have a recipient...", exception.getMessage());
+        var sms = smsService.sendSms(new SmsMessage(recipient, message));
+        assertEquals(sms, false); //We expect the sms to be FALSE because it has no recipient
     }
 
     @Test
-    public void sendMessageExpectSmsServiceExceptionNoMessage() throws SmsServiceException {
+    public void sendMessageWithEmptyMessageExpectFalse() {
         // Arrange
         // Act
-        var recipient = "123123";
+        var recipient = "12345678";
         var message = "";
-        Throwable exception = assertThrows(SmsServiceException.class, () -> smsService.sendSms(new SmsMessage(recipient, message)));
-        assertEquals("SMS ERROR: message is empty...", exception.getMessage());
+        var sms = smsService.sendSms(new SmsMessage(recipient, message));
+        assertEquals(sms, false); //We expect the sms to be FALSE because it has no recipient
+    }
+
+    @Test
+    public void sendMessageWithEmptyMessageAndRecipientExpectFalse() {
+        // Arrange
+        // Act
+        var recipient = "";
+        var message = "";
+        var sms = smsService.sendSms(new SmsMessage(recipient, message));
+        assertEquals(sms, false); //We expect the sms to be FALSE because it has no recipient
     }
 }
