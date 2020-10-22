@@ -53,5 +53,7 @@ ADD COLUMN `phonenumber` VARCHAR(45) NULL AFTER `birthdate`;
 ```
 
 Finally, clone the project and run it up in your favorite IDE. If setup correct you should see it running with all the tests passing.  
-**NOTE:** You may have to run the test twice before everyone passes. It is because docker doesn't finish setting up the database before running some of the tests).  
-![alt text](/test-passing-screenshot.png)
+**NOTE:** You may have to run the test twice before everyone passes. It is because docker doesn't finish setting up the database before running some of the tests).
+First Run (SETUP)        |  Second Run
+:-------------------------:|:-------------------------:
+![passed](/test-failing-screenshot.png)  |  ![passed](/test-passing-screenshot.png)
