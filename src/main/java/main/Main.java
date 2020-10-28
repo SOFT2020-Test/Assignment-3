@@ -26,23 +26,31 @@ public class Main {
     private static final String user = "root";
     private static final String pass = "password";
 
-    public static void main(String[] args) throws SQLException, CustomerServiceException, SmsServiceException, BookingServiceException {
+    public static void main(String[] args) throws SQLException, CustomerServiceException, SmsServiceException, BookingServiceException, ParseException {
         CustomerStorageImpl storage = new CustomerStorageImpl(conStr, user, pass);
         EmployeeStorageImpl eStorage = new EmployeeStorageImpl(conStr, user, pass);
         BookingStorageImpl bStorage = new BookingStorageImpl(conStr, user, pass);
         SmsServiceImpl smsService = new SmsServiceImpl();
         CustomerServiceImpl customerService = new CustomerServiceImpl(storage);
         BookingServiceImpl bookingService = new BookingServiceImpl(bStorage);
+        Faker faker = new Faker();
 
-        var x = customerService.getCustomerById(10);
-        System.out.println(x);
 
-        /*BookingCreation t = new BookingCreation(3,3, "2020-10-10","20:15","21:15");
-        bStorage.createBooking(t);*/
+        var custSize = storage.getCustomers().size();
+        var empSize = eStorage.getEmployees().size();
+
+        if(custSize < 10 || empSize < 10) {
+            CreateFakeEmployees(10);
+            CreateFakeCostumers(10);
+
+            BookingCreation t = new BookingCreation(3,3, SQLConverter.ConvertToSQLDate(new Date()),"20:15","21:15");
+            bStorage.createBooking(t);
+            System.out.println("DATABASE SETUP COMPLETE");
+        }
 
     }
 
-    public void CreateFakeEmployees(int amount) throws SQLException {
+    public static void CreateFakeEmployees(int amount) throws SQLException {
         EmployeeStorageImpl eStorage = new EmployeeStorageImpl(conStr, user, pass);
         Faker faker = new Faker();
         for (int i = 0; i < amount; i++) {
@@ -51,7 +59,7 @@ public class Main {
         }
     }
 
-    public void createFakeCostumer(int amount) throws SQLException, ParseException {
+    public static void CreateFakeCostumers(int amount) throws SQLException, ParseException {
         CustomerStorageImpl cStorage = new CustomerStorageImpl(conStr, user, pass);
         Faker faker = new Faker();
         for (int i = 0; i < amount; i++) {
