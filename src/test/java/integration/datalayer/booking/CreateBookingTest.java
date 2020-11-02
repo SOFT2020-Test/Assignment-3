@@ -1,12 +1,8 @@
 package integration.datalayer.booking;
 
-import com.github.javafaker.Faker;
 import datalayer.booking.BookingStorage;
 import datalayer.booking.BookingStorageImpl;
-import datalayer.customer.CustomerStorage;
-import datalayer.customer.CustomerStorageImpl;
 import dto.BookingCreation;
-import dto.CustomerCreation;
 import main.SQLConverter;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.configuration.FluentConfiguration;
@@ -48,7 +44,7 @@ class CreateBookingTest {
     public void mustSaveCustomerInDatabaseWhenCallingCreateCustomer() throws SQLException {
         // Arrange
         // Act
-        bookingStorage.createBooking(new BookingCreation(1, 1, SQLConverter.ConvertToSQLDate(new Date()), "15:00", "21:00"));
+        bookingStorage.createBooking(new BookingCreation(1, 1, SQLConverter.convertToSQLDate(new Date()), "15:00", "21:00"));
 
         // Assert
         var customers = bookingStorage.getBookingsForCustomer(1);

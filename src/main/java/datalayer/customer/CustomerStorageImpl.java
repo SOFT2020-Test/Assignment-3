@@ -70,7 +70,7 @@ public class CustomerStorageImpl implements CustomerStorage {
             var stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, customerToCreate.getFirstname());
             stmt.setString(2, customerToCreate.getLastname());
-            stmt.setDate(3, SQLConverter.ConvertToSQLDate(customerToCreate.getBirthday()));
+            stmt.setDate(3, SQLConverter.convertToSQLDate(customerToCreate.getBirthday()));
             stmt.setString(4, customerToCreate.getPhoneNumber());
 
             stmt.executeUpdate();
@@ -78,8 +78,7 @@ public class CustomerStorageImpl implements CustomerStorage {
             // get the newly created id
             try (var resultSet = stmt.getGeneratedKeys()) {
                 resultSet.next();
-                int newId = resultSet.getInt(1);
-                return newId;
+                return resultSet.getInt(1);
             }
         }
     }

@@ -59,8 +59,7 @@ public class EmployeeStorageImpl implements EmployeeStorage {
             // get the newly created id
             try (var resultSet = stmt.getGeneratedKeys()) {
                 resultSet.next();
-                int newId = resultSet.getInt(1);
-                return newId;
+                return resultSet.getInt(1);
             }
         }
     }

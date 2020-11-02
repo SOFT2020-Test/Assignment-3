@@ -41,7 +41,7 @@ public class NotificationTest {
         var recipient = "123123";
         var message = "This is a message!";
         var sms = smsService.sendSms(new SmsMessage(recipient, message));
-        assertEquals(sms, true); //We expect the sms to be TRUE
+        assertEquals(true, sms); //We expect the sms to be TRUE
     }
 
     @Test
@@ -51,7 +51,7 @@ public class NotificationTest {
         var recipient = "";
         var message = "This is a message!";
         var sms = smsService.sendSms(new SmsMessage(recipient, message));
-        assertEquals(sms, false); //We expect the sms to be FALSE because it has no recipient
+        assertEquals(false, sms); //We expect the sms to be FALSE because it has no recipient
     }
 
     @Test
@@ -61,7 +61,7 @@ public class NotificationTest {
         var recipient = "12345678";
         var message = "";
         var sms = smsService.sendSms(new SmsMessage(recipient, message));
-        assertEquals(sms, false); //We expect the sms to be FALSE because it has no recipient
+        assertEquals(false, sms); //We expect the sms to be FALSE because it has no recipient
     }
 
     @Test
@@ -71,6 +71,6 @@ public class NotificationTest {
         var recipient = "";
         var message = "";
         var sms = smsService.sendSms(new SmsMessage(recipient, message));
-        assertEquals(sms, false); //We expect the sms to be FALSE because it has no recipient
+        assertEquals(false, sms); //We expect the sms to be FALSE because it has no recipient
     }
 }
