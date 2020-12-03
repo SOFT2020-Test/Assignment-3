@@ -1,6 +1,8 @@
 # Assignment-3   
-###   by Jonatan, Jonas & Thomas  
-[Assignment Link](Assignment-3-Description.pdf)  
+- Jonatan Bakke https://github.com/JonatanMagnusBakke
+- Jonas Hein - https://github.com/Zenzus
+- Thomas Ebsen - https://github.com/Srax   
+- [Assignment Link](Assignment-3-Description.pdf)  
 
 ## Setup
 What you'll need:
